@@ -1,0 +1,100 @@
+			  #### README ####
+_______________________________________________________________________________
+
+author : Arjun Krishna
+
+_______________________________________________________________________________
+# the following looks good when viewed from the vi editor #
+_______________________________________________________________________________
+file_structure:
+ a) main.cpp	: Main code compiled as match (executable) 
+ 
+ b) grammer.cnf	: Grammer which generates valid regular expressions
+
+ c) cnf.h 	: Library for converting a cnf grammer containing file
+		  i.e grammer.cnf ( which is required in a described format )
+
+ d) regex.h	: Library for constructing an NFA for a regular expression
+		  and for matching strings (i.e to check if string belongs
+		  to the language represented by the regular expression.
+_______________________________________________________________________________
+
+FORMAT FOR GRAMMER ( for grammer.cnf ):
+
+ ____________________________________________________________________________
+|				FORMAT					     |
+|									     |
+|<A>=<B><C>							 	     |
+|<A>=$a$								     |
+|____________________________________________________________________________|
+
+meaning,
+grammer has productions
+A -> BC
+A -> a
+
+<B> -- indicates non terminal symbol
+$B$ -- indicates a terminal symbol
+
+_______________________________________________________________________________
+
+cnf.h:
+
+class CNF:
+ constructor : CNF(file_name) 	# file_name contains the grammer in CNF
+ 
+ functions:
+ 1) print_productions()		# prints the productions in the grammer
+ 2) CYK(s)			# run the CYK algorithm on string s
+				# returns 1 if s is in language of the Grammer
+
+_______________________________________________________________________________
+
+regex.h:
+
+class automaton:
+ public variables:
+	vector <int> S	# Start states
+	vector <int> F	# Final states
+	adj		# The di-graph representation of automaton
+	Q		# The number of states in automaton
+
+ constructor: automaton(char a)	# automaton that accepts only string a
+
+functions:	{Not part of the class}
+
+nfa_union(A,B)		# return NFA of union of A and B
+dot(A,B)		# return NFA of concatenation of A and B
+astrix(A)		# return NFA of A* 
+
+create_automaton(regex)	# returns automaton that accepts L(regex)
+
+run_NFA(M,s)	# run's the string s on NFA M
+
+match_string(M,s)	# returns 1 if s is accepted by 1 else 0
+_______________________________________________________________________________
+
+main.cpp :
+ # code when compiled requires input of the format
+
+N is a integer
+|regex|  <= 100
+|string| <= 100000
+
+input:
+	regex
+	N
+	{followed by N strings to be tested}
+
+output:
+	{ Yes/No N times }
+	
+	# Yes if the string is accepted by L(regex)
+	# No otherwise
+_______________________________________________________________________________
+
+--------------------------------- END -----------------------------------------
+
+
+
+
